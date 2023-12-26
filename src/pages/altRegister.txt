@@ -1,0 +1,39 @@
+import { useState } from 'react';
+
+export function Register() {
+  const [newUser, setNewUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+    avatar: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewUser((prevUser) => ({ ...prevUser, [name]: value }));
+  };
+
+  return (
+    <div className='bg-black'>
+      <h1>Register new Account</h1>
+      <form className='text-white'>
+        <label>
+          <p>Nombre: </p>
+          <input type="text" name="name" value={newUser.name} onChange={handleChange} />
+        </label>
+        <label>
+          <p>Email: </p>
+          <input type="email" name="email" value={newUser.email} onChange={handleChange} />
+        </label>
+        <label>
+          <p>Password: </p>
+          <input type="password" name="password" value={newUser.password} onChange={handleChange} />
+        </label>
+        <label>
+          <p>Avatar: </p>
+          <input type="file" name="avatar" onChange={handleChange} />
+        </label>
+      </form>
+    </div>
+  );
+}

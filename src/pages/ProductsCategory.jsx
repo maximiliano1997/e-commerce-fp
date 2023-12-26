@@ -95,7 +95,7 @@ export function ProductsCategory({ getProducts }) {
                                         <hr className={`w-[80%] m-auto border-[2px] border-${hrColor} hover:border-violet-500 hover:shadow-5`} />
                                         <div div className='px-9 py-5 flex justify-between'>
                                             <span className='text-3xl font-bold text-gray-900 dark:text-white'>${product.price}</span>
-                                            <Link to={`${product.id}`} className={`text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-${hrColor} dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>Ver Detalles</Link >
+                                            <Link to={`/products/${product.id}`} className={`text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-${hrColor} dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>Ver Detalles</Link >
                                         </div>
                                     </div>
                                 )
@@ -137,7 +137,7 @@ export function ProductsCategory({ getProducts }) {
                                         <hr className={`w-[80%] m-auto border-[2px] border-${hrColor} hover:border-violet-500 hover:shadow-5`} />
                                         <div div className='px-9 py-5 flex justify-between'>
                                             <span className='text-3xl font-bold text-gray-900 dark:text-white'>${product.price}</span>
-                                            <Link to={`${product.id}`} className={`text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-${hrColor} dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>See Product</Link >
+                                            <Link to={`/products/${product.id}`} className={`text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-${hrColor} dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>See Product</Link >
                                         </div>
                                     </div>
                                 )

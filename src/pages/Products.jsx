@@ -33,7 +33,11 @@ export function Products({ getProducts }) {
     return (
         <>
             <div className="px-[200px] bg-black">
-                <h1>Productos</h1>
+                <div className='px-5 mx-5 my-5 flex justify-between'>
+                    <h1 className='font-bold text-[33px] text-white'>Productos</h1>
+                    <div></div>
+                    <Link to='/products/create' className='bg-green-500 hover:bg-green-700 text-center text-white font-bold px-2 py-4 rounded item-right'>Create New Product</Link>
+                </div>
                 <div className='grid grid-cols-4 gap-10'>
                     {query.data?.map((product) => {
                         console.log(product)
@@ -69,7 +73,7 @@ export function Products({ getProducts }) {
                                 <hr className={`w-[80%] m-auto border-[2px] border-${hrColor} hover:border-violet-500 hover:shadow-5`} />
                                 <div div className='px-9 py-5 flex justify-between'>
                                     <span className='text-3xl font-bold text-gray-900 dark:text-white'>${product.price}</span>
-                                    <Link to={`${product.id}`} className={`text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-${hrColor} dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>See Product</Link >
+                                    <Link to={`${product.id}`} className={`text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-${hrColor} dark:hover:bg-blue-700 dark:focus:ring-blue-800`}>Ver Detalles</Link >
                                 </div>
                             </div>
                         )

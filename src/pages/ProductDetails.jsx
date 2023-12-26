@@ -1,54 +1,93 @@
-import { useParams, Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
     useQuery,
     useQueryClient,
 } from '@tanstack/react-query'
 
 export function ProductDetails({ getProducts }) {
-
     const { id } = useParams()
 
     const queryClient = useQueryClient()
     const query = useQuery({ queryKey: ['product'], queryFn: getProducts })
 
+    const navigate = useNavigate();
+
 
     // console.log(query.data)
+    async function deleteProduct(id, navigate) {
+        console.log('deleting product...of ID: ', id)
+        const url = `https://api.escuelajs.co/api/v1/products/${parseInt(id)}`
+
+
+        try {
+            // const responseDel = await fetch(url, {
+            //     method: 'DELETE',
+            // });
+
+            // if (!responseDel.ok) {
+            //     const data = await responseDel.json();
+            //     console.log('Response: ', data)
+            //     console.log('Error Message: ', data.message)
+            //     throw new Error('Error en Delete...')
+            // }
+            console.log('DELETE fue exitoso')
+
+            return navigate('/products', { replace: true });
+        } catch (error) {
+            console.error('Fallo en el Delete....', error)
+            console.log(error.message)
+        }
+    }
 
 
     const product = query.data?.find(product => product.id == id)
 
     if (product) {
-        console.log(product)
+        // console.log(product)
 
         return (
-            <div className='flex justify-center px-10 py-10 bg-black'>
-                <div className='w-full max-w-[50%] bg-white border-2 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700'>
-                    <div className='px-8 text-[33px] text-white font-bold'>
-                        <a href="#">
-                            <h5>
-                                {product.title}
-                            </h5>
-                        </a>
-                    </div>
-                    <div className='w-[700px] rounded-xl flex'>
-                        <a href="#" className='w-[350px] rounded-t-lg'>
-                            <img className='p-8 rounded-t-lg' src={product.images[0]} alt="" />
-                        </a>
-                        <div className='w-[350px] p-8 text-white text-left flex-column space-y-8'>
-                            <p className='text-lg'>
-                                {product.description}
-                            </p>
-                            <p className='font-bold'>
-                                Category: {product.category.name}
-                            </p>
+            <div className='my-[50px]'>
+
+                <div className='flex justify-center px-10 py-10 bg-black'>
+                    <div className='w-full max-w-[50%] bg-white border-2 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700'>
+                        <div className='px-8 text-[33px] text-white font-bold'>
+                            <a href="#">
+                                <h5>
+                                    {product.title}
+                                </h5>
+                            </a>
+                        </div>
+                        <div className='w-[700px] rounded-xl flex'>
+                            <a href="#" className='w-[350px] rounded-t-lg'>
+                                <img className='p-8 rounded-t-lg' src={product.images[0]} alt="" />
+                            </a>
+                            <div className='w-[350px] p-8 text-white text-left flex-column space-y-8'>
+                                <p className='text-lg'>
+                                    {product.description}
+                                </p>
+                                <p className='font-bold'>
+                                    Category: {product.category.name}
+                                </p>
+                            </div>
+                        </div>
+
+                        <hr className={`w-[80%] m-auto border-[2px] hover:border-violet-500 hover:shadow-5`} />
+                        <div className='px-9 py-5 flex justify-between'>
+                            <span className='text-3xl font-bold text-gray-900 dark:text-white'>${parseInt(product.price)}</span>
+                            <div className='flex gap-5'>
+                                <Link to={`/products/edit/${product.id}`} class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                                >
+                                    Edit
+                                </Link>
+                                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                    onClick={() => deleteProduct(id, navigate)}
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     </div>
-
-                    <hr className={`w-[80%] m-auto border-[2px] hover:border-violet-500 hover:shadow-5`} />
-                    <div className='px-9 py-5 flex justify-between'>
-                        <span className='text-3xl font-bold text-gray-900 dark:text-white'>${parseInt(product.price)}</span>
-                    </div>
-
                 </div>
             </div>
         )
