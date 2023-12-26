@@ -21,16 +21,16 @@ export function ProductDetails({ getProducts }) {
 
 
         try {
-            // const responseDel = await fetch(url, {
-            //     method: 'DELETE',
-            // });
+            const responseDel = await fetch(url, {
+                method: 'DELETE',
+            });
 
-            // if (!responseDel.ok) {
-            //     const data = await responseDel.json();
-            //     console.log('Response: ', data)
-            //     console.log('Error Message: ', data.message)
-            //     throw new Error('Error en Delete...')
-            // }
+            if (!responseDel.ok) {
+                const data = await responseDel.json();
+                console.log('Response: ', data)
+                console.log('Error Message: ', data.message)
+                throw new Error('Error en Delete...')
+            }
             console.log('DELETE fue exitoso')
 
             return navigate('/products', { replace: true });
