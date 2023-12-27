@@ -4,9 +4,12 @@ import {
     useQuery,
     useQueryClient,
 } from '@tanstack/react-query'
+import { UserContext } from '../App';
 
 export function ProductDetails({ getProducts }) {
     const { id } = useParams()
+
+    const { user } = useContext(UserContext)
 
     const queryClient = useQueryClient()
     const query = useQuery({ queryKey: ['product'], queryFn: getProducts })
@@ -21,19 +24,26 @@ export function ProductDetails({ getProducts }) {
 
 
         try {
-            const responseDel = await fetch(url, {
-                method: 'DELETE',
-            });
 
-            if (!responseDel.ok) {
-                const data = await responseDel.json();
-                console.log('Response: ', data)
-                console.log('Error Message: ', data.message)
-                throw new Error('Error en Delete...')
+            if (user.password == 'admin') {
+                const responseDel = await fetch(url, {
+                    method: 'DELETE',
+                });
+
+                if (!responseDel.ok) {
+                    const data = await responseDel.json();
+                    console.log('Response: ', data)
+                    console.log('Error Message: ', data.message)
+                    throw new Error('Error en Delete...')
+                }
+                console.log('DELETE fue exitoso')
+
+                return navigate('/products', { replace: true });
+            } else {
+                const redirectTo = '/';
+
+                navigate(redirectTo, { replace: true });
             }
-            console.log('DELETE fue exitoso')
-
-            return navigate('/products', { replace: true });
         } catch (error) {
             console.error('Fallo en el Delete....', error)
             console.log(error.message)

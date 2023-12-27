@@ -39,8 +39,9 @@ import { ErrorPage } from './pages/ErrorPage.jsx'
 import { Extra } from './pages/extra.jsx'
 
 // Extra Pages
-import { SuccessRegistration } from './pages/SuccessRegistration.jsx'
 import { Profile } from './pages/Profile.jsx'
+import { SuccessRegistration } from './pages/SuccessRegistration.jsx'
+import { SuccessProductCreation } from './pages/SuccessProductCreation.jsx'
 
 
 // import reactLogo from './assets/react.svg'
@@ -134,16 +135,25 @@ function App() {
             <Route path='/products/by/:categoryId' element={<ProductsCategory getProducts={getProducts} />}></Route>
 
             <Route path='/products' element={
-              <ProtectedRoute>
-                <Products getProducts={getProducts} />
-              </ProtectedRoute>
+
+              <Products getProducts={getProducts} />
+
             }>
             </Route>
 
 
             <Route path='/products/:id' element={<ProductDetails getProducts={getProducts} />} exact></Route>
-            <Route path='/products/edit/:id' element={<EditarProducto getProducts={getProducts} />} exact></Route>
-            <Route path='/products/create' element={<CrearProducto />} exact></Route>
+            <Route path='/products/edit/:id' element={
+              <ProtectedRoute>
+                <EditarProducto getProducts={getProducts} />
+              </ProtectedRoute>
+            } exact></Route>
+
+            <Route path='/products/create' element={
+              <ProtectedRoute>
+                <CrearProducto />
+              </ProtectedRoute>
+            } exact></Route>
 
 
 
@@ -154,8 +164,9 @@ function App() {
             <Route path="*" element={<ErrorPage />} />
 
             {/* // Extra PAGES */}
+            <Route path="/userProfile" element={<Profile getUsers={getUsers} />} />
             <Route path="/successRegistration" element={<SuccessRegistration />} />
-            <Route path="/userProfile" element={<Profile />} />
+            <Route path="/successProductCreation" element={<SuccessProductCreation />} />
 
           </Route>
 
@@ -171,7 +182,7 @@ function ProtectedRoute({ children }) {
   // console.log(user)
   // let user = false
   console.log()
-  if (!user.email || !user.password) {
+  if (user.email != 'admin' && user.password != 'admin') {
     return <Navigate to='/login' state={{ from: currentLocation }} replace />
   }
   return children

@@ -2,10 +2,16 @@ import {
     Outlet,
     Link,
 } from 'react-router-dom'
-
+import { Logout } from '../utils/HandleLogout.jsx'
 import Logo from '../assets/img/Logo.png'
+import { useContext } from 'react';
+import { UserContext } from '../App.jsx';
 
 export function Layout() {
+    const storedUser = localStorage.getItem('user');
+    const { user } = useContext(UserContext)
+    // const [user, setUser] = useState()
+
     return (
         <div className='bg-black'>
             {/* <nav class="bg-white border-gray-200 dark:bg-gray-900">
@@ -51,13 +57,29 @@ export function Layout() {
                         <img src={Logo} alt="" />
                     </div>
                     <ul className="flex space-x-8">
-                        <li><Link to='/'>Home</Link></li>
-                        <li><Link to='/products'>Productos</Link></li>
-                        <li><Link to='/categories'>Categorias</Link></li>
+                        <li><Link to='/' className='font-bold hover:text-green-500'>Home</Link></li>
+                        <li><Link to='/products' className='font-bold hover:text-green-500'>Productos</Link></li>
+                        <li><Link to='/categories' className='font-bold hover:text-green-500'>Categorias</Link></li>
                     </ul>
                     <ul className="flex space-x-5">
-                        <li><Link to='/login'>Login</Link></li>
-                        <li><Link to='/register'>Register</Link></li>
+                        {storedUser ? (
+                            <>
+                                <li><Link to={`/userProfile`}
+                                    className="inline-flex items-center justify-center px-5 py-1 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
+                                >Perfil</Link></li>
+                                <li><Logout /></li>
+                                {/* Otras opciones de usuario autenticado */}
+                            </>
+                        ) : (
+                            <>
+                                <li><Link to='/login'
+                                    className="inline-flex items-center justify-center px-5 py-1 text-base font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:ring-green-300 dark:focus:ring-green-900"
+                                >Login</Link></li>
+                                <li><Link to='/register'
+                                    className="inline-flex items-center justify-center px-5 py-1 text-base font-medium text-center text-white bg-yellow-500 rounded-lg hover:bg-yellow-700 focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-900"
+                                >Register</Link></li>
+                            </>
+                        )}
                     </ul>
                 </div>
             </nav >
@@ -89,7 +111,7 @@ export function Layout() {
                         </ul>
                     </div>
                     <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-                    <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="#" class="hover:underline">MarketGoods™</a>. All Rights Reserved.</span>
+                    <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="#" class="hover:underline">MarketGoods™</a>.  Maximiliano Imanol Aguer.</span>
                 </div>
             </footer>
 
