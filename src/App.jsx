@@ -18,9 +18,9 @@ import { getUsers } from './utils/getUsers.jsx'
 import { handleLogin } from './utils/handleLogin.jsx'
 import { handleRegister } from './utils/handleRegister.jsx'
 import { handleProductCreation } from './utils/handleProductCreation.jsx'
-import { Logout } from './utils/HandleLogout.jsx'
+import { Logout } from './utils/handleLogout.jsx'
 
-// PAGES
+// PAGESs
 import { Layout } from './pages/Layout.jsx'
 import { Home } from './pages/Home.jsx'
 
