@@ -1,52 +1,22 @@
 import { useNavigate, useLocation, Link } from 'react-router-dom'
-import { useState } from 'react';
-// export function Logout() {
+// import { useState } from 'react';
 
-//     localStorage.removeItem("user");
-//     const [refreshKey, setRefreshKey] = useState(0);
-//     // const navigate = useNavigate()
-
-// const redirectTo = '/home';
-// console.log('Cerrando Sesion....')
-
-// navigate(redirectTo, { replace: true });
-
-// const handleRefresh = () => {
-//     setRefreshKey(prevKey => prevKey + 1);
-// };
-
-//     // const redirectTo = '/';
-//     // console.log('Cerrando Sesion....')
-
-//     // navigate(redirectTo, { replace: true });
-//     handleRefresh()
-
-// }
 
 
 export function Logout() {
-    const [refreshKey, setRefreshKey] = useState(0);
+    // const [refreshKey, setRefreshKey] = useState(0);
 
-    const handleRefresh = () => {
-        setRefreshKey(prevKey => prevKey + 1);
-    };
+    // const handleRefresh = () => {
+    //     setRefreshKey(prevKey => prevKey + 1);
+    // };
     const navigate = useNavigate()
 
     const handleLogout = () => {
-        // Eliminar el usuario del localStorage
         localStorage.removeItem('user');
-        // localStorage.setItem('')
 
-        // Redireccionar a la página de inicio o a donde desees
-        // window.location.href = '/';
-
-        // O puedes usar useHistory si estás usando react-router-dom
-        // import { useHistory } from 'react-router-dom';
-        // const history = useHistory();
-        // history.push('/');
         const redirectTo = '/';
         console.log('Cerrando Sesion....')
-        handleRefresh()
+        // handleRefresh()
         navigate(redirectTo, { replace: true });
     };
 

@@ -18,6 +18,7 @@ import { getUsers } from './utils/getUsers.jsx'
 import { handleLogin } from './utils/handleLogin.jsx'
 import { handleRegister } from './utils/handleRegister.jsx'
 import { handleProductCreation } from './utils/handleProductCreation.jsx'
+import { Logout } from './utils/HandleLogout.jsx'
 
 // PAGES
 import { Layout } from './pages/Layout.jsx'
@@ -118,6 +119,7 @@ function App() {
     handleLogin,
     handleRegister,
     handleProductCreation,
+    Logout,
   }
 
 

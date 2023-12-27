@@ -2,14 +2,14 @@ import {
     Outlet,
     Link,
 } from 'react-router-dom'
-import { Logout } from '../utils/HandleLogout.jsx'
+
 import Logo from '../assets/img/Logo.png'
 import { useContext } from 'react';
 import { UserContext } from '../App.jsx';
 
 export function Layout() {
     const storedUser = localStorage.getItem('user');
-    const { user } = useContext(UserContext)
+    const { user, Logout } = useContext(UserContext)
     // const [user, setUser] = useState()
 
     return (
