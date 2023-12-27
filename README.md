@@ -3,6 +3,9 @@
 
 Proyecto de E-Commerce con React
 
+## Deployed: 
+https://e-commerce-fp.vercel.app/
+
 ## Descripción
 
 Este proyecto es un sistema de comercio electrónico desarrollado con React, que proporciona una plataforma para que los usuarios naveguen por productos, realicen compras y administren sus carritos.
