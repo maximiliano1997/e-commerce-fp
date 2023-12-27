@@ -1,7 +1,6 @@
-# React + Vite
 # Nombre del Proyecto
 
-Proyecto de E-Commerce con React
+Proyecto de E-Commerce con React (React + Vite)
 
 ## Deployed: 
 https://e-commerce-fp.vercel.app/
