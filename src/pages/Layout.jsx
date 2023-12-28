@@ -2,15 +2,20 @@ import {
     Outlet,
     Link,
 } from 'react-router-dom'
-
+import { TiShoppingCart } from "react-icons/ti";
 import Logo from '../assets/img/Logo.png'
 import { useContext } from 'react';
 import { UserContext } from '../App.jsx';
+import { CartContext } from '../utils/ShoppingCartContext';
 
 export function Layout() {
     const storedUser = localStorage.getItem('user');
     const { user, Logout } = useContext(UserContext)
-    // const [user, setUser] = useState()
+    const [cart, setCart] = useContext(CartContext)
+
+    const cantidad = cart.reduce((sum, item) => {
+        return sum + item.cantidad
+    }, 0);
 
     return (
         <div className='bg-black'>
@@ -73,13 +78,16 @@ export function Layout() {
                         ) : (
                             <>
                                 <li><Link to='/login'
-                                    className="inline-flex items-center justify-center px-5 py-1 text-base font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:ring-green-300 dark:focus:ring-green-900"
+                                    className="inline-flex items-center justify-center px-5 py-1 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-green-300 dark:focus:ring-green-900"
                                 >Login</Link></li>
                                 <li><Link to='/register'
                                     className="inline-flex items-center justify-center px-5 py-1 text-base font-medium text-center text-white bg-yellow-500 rounded-lg hover:bg-yellow-700 focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-900"
                                 >Register</Link></li>
                             </>
                         )}
+                        <li><Link to='/cart'
+                            className="inline-flex gap-2 items-center justify-center px-5 py-1 text-base font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:ring-green-300 dark:focus:ring-green-900"
+                        ><TiShoppingCart />  <span> {cantidad} </span></Link></li>
                     </ul>
                 </div>
             </nav >

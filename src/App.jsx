@@ -12,6 +12,7 @@ import {
 } from '@tanstack/react-query'
 
 // UTILS
+import { ShoppingCartProvider } from './utils/ShoppingCartContext.jsx'
 import { getProducts } from './utils/getProducts.jsx'
 import { getCategories } from './pages/Category.jsx'
 import { getUsers } from './utils/getUsers.jsx'
@@ -23,6 +24,7 @@ import { Logout } from './utils/handleLogout.jsx'
 // PAGESs
 import { Layout } from './pages/Layout.jsx'
 import { Home } from './pages/Home.jsx'
+import { ShopCart } from './pages/ShopCart.jsx'
 
 import { Products } from './pages/Products.jsx'
 import { ProductDetails } from './pages/ProductDetails.jsx'
@@ -43,6 +45,7 @@ import { Extra } from './pages/extra.jsx'
 import { Profile } from './pages/Profile.jsx'
 import { SuccessRegistration } from './pages/SuccessRegistration.jsx'
 import { SuccessProductCreation } from './pages/SuccessProductCreation.jsx'
+import { SuccessBuy } from './pages/SuccessBuy.jsx'
 
 
 // import reactLogo from './assets/react.svg'
@@ -124,57 +127,60 @@ function App() {
 
 
   return (
-    <UserContext.Provider value={value}>
-      <QueryClientProvider client={queryClient}>
+    <ShoppingCartProvider>
+      <UserContext.Provider value={value}>
+        <QueryClientProvider client={queryClient}>
 
-        <BrowserRouter>
+          <BrowserRouter>
 
 
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
 
-            <Route path='/categories' element={<Categories />}></Route>
-            <Route path='/products/by/:categoryId' element={<ProductsCategory getProducts={getProducts} />}></Route>
+              <Route path='/categories' element={<Categories />}></Route>
+              <Route path='/products/by/:categoryId' element={<ProductsCategory getProducts={getProducts} />}></Route>
 
-            <Route path='/products' element={
+              <Route path='/products' element={
 
-              <Products getProducts={getProducts} />
+                <Products getProducts={getProducts} />
 
-            }>
+              }>
+              </Route>
+
+
+              <Route path='/products/:id' element={<ProductDetails getProducts={getProducts} />} exact></Route>
+              <Route path='/products/edit/:id' element={
+                <ProtectedRoute>
+                  <EditarProducto getProducts={getProducts} />
+                </ProtectedRoute>
+              } exact></Route>
+
+              <Route path='/products/create' element={
+                <ProtectedRoute>
+                  <CrearProducto />
+                </ProtectedRoute>
+              } exact></Route>
+              <Route path="/cart" element={<ShopCart />} />
+
+
+              <Route path="/extra" element={<Extra />} />
+
+              <Route path="/login" element={<Login getUsers={getUsers} />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="*" element={<ErrorPage />} />
+
+              {/* // Extra PAGES */}
+              <Route path="/userProfile" element={<Profile getUsers={getUsers} />} />
+              <Route path="/successRegistration" element={<SuccessRegistration />} />
+              <Route path="/successProductCreation" element={<SuccessProductCreation />} />
+              <Route path="/successbuy" element={<SuccessBuy />} />
+
             </Route>
 
-
-            <Route path='/products/:id' element={<ProductDetails getProducts={getProducts} />} exact></Route>
-            <Route path='/products/edit/:id' element={
-              <ProtectedRoute>
-                <EditarProducto getProducts={getProducts} />
-              </ProtectedRoute>
-            } exact></Route>
-
-            <Route path='/products/create' element={
-              <ProtectedRoute>
-                <CrearProducto />
-              </ProtectedRoute>
-            } exact></Route>
-
-
-
-            <Route path="/extra" element={<Extra />} />
-
-            <Route path="/login" element={<Login getUsers={getUsers} />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="*" element={<ErrorPage />} />
-
-            {/* // Extra PAGES */}
-            <Route path="/userProfile" element={<Profile getUsers={getUsers} />} />
-            <Route path="/successRegistration" element={<SuccessRegistration />} />
-            <Route path="/successProductCreation" element={<SuccessProductCreation />} />
-
-          </Route>
-
-        </BrowserRouter>
-      </QueryClientProvider >
-    </UserContext.Provider >
+          </BrowserRouter>
+        </QueryClientProvider >
+      </UserContext.Provider >
+    </ShoppingCartProvider>
   )
 }
 

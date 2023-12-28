@@ -5,16 +5,59 @@ import {
     useQueryClient,
 } from '@tanstack/react-query'
 import { UserContext } from '../App';
+import { CartContext } from '../utils/ShoppingCartContext';
 
 export function ProductDetails({ getProducts }) {
     const { id } = useParams()
 
+    const [cart, setCart] = useContext(CartContext)
     const { user } = useContext(UserContext)
 
     const queryClient = useQueryClient()
     const query = useQuery({ queryKey: ['product'], queryFn: getProducts })
 
     const navigate = useNavigate();
+
+
+    function addToCart(product) {
+        console.log('Añadiendo al carrito....')
+
+        setCart((currItems) => {
+            const existItems = currItems.find((item) => item.id === product.id);
+            if (existItems) {
+                return currItems.map((item) => {
+                    if (item.id === product.id) {
+                        return { ...item, cantidad: item.cantidad + 1 };
+                    } else {
+                        return item;
+                    }
+                });
+            } else {
+                return [...currItems, { ...product, cantidad: 1 }]
+            }
+        })
+    }
+
+
+    function removeItem(product) {
+        console.log("Removiendo del Carrito...")
+
+        setCart((currItems) => {
+            if (currItems.find((item) => item.id == product.id)?.cantidad === 1) {
+                return currItems.filter((item) => item.id !== product.id);
+            } else {
+                return currItems.map((item) => {
+                    if (item.id === product.id) {
+                        return { ...item, cantidad: item.cantidad - 1 };
+                    } else {
+                        return item;
+                    }
+                })
+            }
+        })
+    }
+
+
 
 
     // console.log(query.data)
@@ -53,8 +96,18 @@ export function ProductDetails({ getProducts }) {
 
     const product = query.data?.find(product => product.id == id)
 
+
+
+
+
     if (product) {
         // console.log(product)
+
+        const getCantidadXProducto = (id) => {
+            return cart.find((item) => item.id === id)?.cantidad || 0;
+        };
+        const cantidadXProducto = getCantidadXProducto(product.id)
+        console.log(cantidadXProducto)
 
         return (
             <div className='my-[50px]'>
@@ -86,11 +139,38 @@ export function ProductDetails({ getProducts }) {
                         <div className='px-9 py-5 flex justify-between'>
                             <span className='text-3xl font-bold text-gray-900 dark:text-white'>${parseInt(product.price)}</span>
                             <div className='flex gap-5'>
-                                <Link to={`/products/edit/${product.id}`} class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+
+                                {
+                                    cantidadXProducto === 0 ? (
+                                        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                                            onClick={() => addToCart(product)}
+                                        >
+                                            + Add to Cart
+                                        </button>
+                                    ) : (
+                                        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                                            onClick={() => addToCart(product)}
+                                        >
+                                            + Add More
+                                        </button>
+                                    )
+                                }
+
+                                {
+                                    cantidadXProducto > 0 && (
+                                        <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+                                            onClick={() => removeItem(product)}
+                                        >
+                                            - Remove from Cart
+                                        </button>
+                                    )
+                                }
+
+                                <Link to={`/products/edit/${product.id}`} className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
                                 >
                                     Edit
                                 </Link>
-                                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                                     onClick={() => deleteProduct(id, navigate)}
                                 >
                                     Delete
